@@ -1,7 +1,8 @@
 <%= simple_form_for @cocktail, class: "form-group" do |f| %>
   <%= f.label :name, "Name your cocktail: " %>
   <%= f.text_field :name, id: "text-field"%>
+  <button id="random-name-butt" type="button">Generate random name</button>
+  <%= f.input :photo, as: :file %>
   <%= f.submit %>
 <% end %>
-<button id="random-name-butt">Generate random name</button>
 <%= javascript_pack_tag 'cocktails/new', defer: true%>
