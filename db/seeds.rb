@@ -13,5 +13,5 @@ end
 
 doses = ['a sprinkle of', 'a thimble full of', 'a liter of', 'a ton of', 'a shit ton of']
 doses.each do |dose|
-    Dose.create!(descr)
+    Dose.create!(dose)
 end
