@@ -1,9 +1,15 @@
-<h1>Tister Mock Fails</h1>
-<h3 class="subtitle"></h3>
-<div class="col-6">
+<div class="hero">
+  <h1>Tister Mock Fails</h1>
+  <h4 class="subtitle"></h4>
+</div>
+<div class="my-card-container">
   <% @cocktails.each do |cocktail| %>
     <%= link_to cocktail_path(cocktail) do%>
-      <div class="card"><%= cocktail.name %></div>
+      <div class="my-card">
+        <div class="my-card-title">
+          <h3><%= cocktail.name %></h3>
+        </div>
+      </div>
     <% end %>
   <% end %>
 </div>

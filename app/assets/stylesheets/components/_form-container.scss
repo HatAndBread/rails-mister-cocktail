@@ -1,0 +1,19 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  color: $black;
+  form {
+    max-width: 300px;
+    background-color: $light;
+    padding: 16px;
+    border-radius: 6px;
+  }
+  button {
+    background-color: $dark;
+    border-radius: 6px;
+    margin: 8px;
+    padding: 16px 8px 16px 8px;
+    color: $light;
+  }
+}

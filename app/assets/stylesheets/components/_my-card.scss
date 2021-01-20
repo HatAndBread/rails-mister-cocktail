@@ -1,0 +1,13 @@
+.my-card {
+  background-color: $light;
+  color: $black;
+  padding: 8px;
+  width: 260px;
+  min-height: 300px;
+  text-align: center;
+  margin: 32px;
+  border-radius: 6px;
+  a {
+    color: $black;
+  }
+}

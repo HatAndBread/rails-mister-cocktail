@@ -1,0 +1,12 @@
+.hero {
+  width: 100vw;
+  height: 60vh;
+  background: linear-gradient(to right, rgba(30, 30, 30, 0.4), rgba(40, 40, 40, 0.4)), url('hero.jpg');
+  background-size: cover;
+  color: $light;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

@@ -1,8 +1,13 @@
-<%= simple_form_for @cocktail, class: "form-group" do |f| %>
-  <%= f.label :name, "Name your cocktail: " %>
-  <%= f.text_field :name, id: "text-field"%>
-  <button id="random-name-butt" type="button">Generate random name</button>
-  <%= f.input :photo, as: :file %>
-  <%= f.submit %>
-<% end %>
-<%= javascript_pack_tag 'cocktails/new', defer: true%>
+<br>
+<br>
+<br>
+<div class="form-container">
+  <%= simple_form_for @cocktail, class: "form-group" do |f| %>
+    <%= f.label :name, "Name your cocktail: " %>
+    <%= f.text_field :name, id: "text-field"%>
+    <button id="random-name-butt" type="button">Generate random name</button>
+    <%= f.input :photo, as: :file, class: "link-btn" %>
+    <%= f.submit "Add 🍸✨", class: "link-btn"%>
+  <% end %>
+  <%= javascript_pack_tag 'cocktails/new', defer: true%>
+</div>
