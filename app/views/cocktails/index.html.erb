@@ -8,9 +8,16 @@
       <div class="my-card">
         <div class="my-card-title">
           <h3><%= cocktail.name %></h3>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-</div>
-<%=javascript_pack_tag "cocktails/index", defer: true%>
+          <% if cocktail.photo.attached? %>
+            <%= cl_image_tag cocktail.photo.key, height: 200, width: 200, crop: :fill %>
+          <% else %>
+            <%= image_tag 'default.jpg', height: 200, width: 200, crop: :fill %>
+          <% end %>
+          <p class="description">
+            <p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <%=javascript_pack_tag "cocktails/index", defer: true%>
