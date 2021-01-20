@@ -3,6 +3,11 @@ import s from 's2pd';
 import groundPath from '../../../assets/images/ground.png';
 import cloudsPath from '../../../assets/images/clouds.png';
 import heroPath from '../../../assets/images/character.png';
+import mountainsPath from '../../../assets/images/mountains.png';
+import cocktailPath from '../../../assets/images/cocktail.png';
+
+let playingGame = false;
+let gameOver = false;
 
 const subTitle = document.querySelector('.subtitle');
 const descriptions = Array.from(document.querySelectorAll('.description'));
@@ -13,30 +18,91 @@ descriptions.forEach((description) => {
 });
 
 const canvas = document.querySelector('canvas');
-s.addCanvas(canvas, window.innerWidth, window.innerHeight * 0.4);
+console.info(canvas);
+const startButt = document.querySelector('#start-butt');
+startButt.position = 'fixed';
+startButt.addEventListener('click', () => {
+  playingGame = true;
+  gameOver = false;
+  hero.changeAnimationTo('only');
+  startButt.style.display = 'none';
+  cocktails.forEach((cocktail) => (cocktail.xPos = s.randomBetween(500, 800)));
+  timeText.text = `Time: 0`;
+});
+
+s.addCanvas(canvas, 420, 220);
 s.stillCanvas();
-s.backgroundColor('rgb(140,224,98)');
 s.listenForMouse();
 const clouds = new s.Background(cloudsPath);
+const mountains = new s.Background(mountainsPath);
 const ground = new s.Tile(groundPath, 0, 10, 0, 1);
 ground.yPos = s.height - 30;
 ground.platform(true);
 const hero = new s.Sprite(40, ground.yPos - 150, heroPath, 35, 4);
 
 hero.addAnimation('only', 0, 7);
+hero.addAnimation('dead', 9, 1);
 hero.changeAnimationTo('only');
-hero.feelGravity();
+hero.feelGravity(11);
+hero.trimHitBox(18, 18, 0, 10);
+const someText = new s.Text('red', 'center', 30, '', 'sans-serif', 28, 3, 'green');
+const instructions = new s.Text('red', 'center', 30, '', 'sans-serif', 18);
+let time = 0;
+
+const timeText = new s.Text('red', 10, 30, `Time: ${Math.floor(time / 60)}`, 'sans-serif', 18);
+someText.center = true;
 s.onClick(() => {
-  hero.jump(20, true);
+  if (playingGame) {
+    hero.jump(4, true);
+  }
 });
-clouds.velX = 1;
 s.keyUp('space', () => {
-  sprite.jump(200, true); // will make sprite jump 200 pixels.
+  if (playingGame) {
+    sprite.jump(230, true);
+  }
 });
-s.onResize(() => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight * 0.4;
-  ground.yPos = canvas.height - 30;
-  hero.yPos = ground.yPos - 150;
+const cocktails = [];
+for (let i = 0; i < 2; i++) {
+  const cocktail = new s.Sprite(s.randomBetween(500, 800), ground.yPos - 38, cocktailPath);
+  s.onCollision(cocktail, hero, true, () => {
+    playingGame = false;
+    gameOver = true;
+    hero.changeAnimationTo('dead');
+  });
+  cocktails.push(cocktail);
+}
+ground.innerVelX = -1.5;
+mountains.velX = -0.4;
+clouds.velX = -0.1;
+
+s.loop(() => {
+  if (playingGame) {
+    time += 1;
+    timeText.text = `Time: ${Math.floor(time / 60)}`;
+    someText.text = '';
+    instructions.text = 'Click anywhere to jump';
+    cocktails.forEach((cocktail) => (cocktail.velX = -4.4));
+    ground.innerVelX = -1.5;
+    mountains.velX = -0.4;
+    clouds.velX = -0.1;
+  } else {
+    time = 0;
+    instructions.text = '';
+    someText.text = '';
+    cocktails.forEach((cocktail) => (cocktail.velX = 0));
+  }
+  if (gameOver) {
+    instructions.text = '';
+    someText.text = '💀GAME OVER💀';
+    ground.innerVelX = 0;
+    mountains.velX = 0;
+    clouds.velX = -0.1;
+    startButt.innerText = 'Play again?';
+    startButt.style.display = 'initial';
+  }
+  cocktails.forEach((cocktail) => {
+    if (cocktail.xPos < -30) {
+      cocktail.xPos = s.randomBetween(430, 950);
+    }
+  });
 });
-s.loop(() => {});

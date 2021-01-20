@@ -2,7 +2,12 @@
   <h1>Tister Mock Fails</h1>
   <h4 class="subtitle"></h4>
 </div>
-<canvas></canvas>
+<br>
+<div class="canvas-container">
+  <button class="link-btn" id="start-butt">START</button>
+  <canvas>
+  </canvas>
+</div>
 <div class="my-card-container">
   <% @cocktails.each do |cocktail| %>
     <%= link_to cocktail_path(cocktail) do%>
