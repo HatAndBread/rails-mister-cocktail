@@ -5,9 +5,16 @@ import cloudsPath from '../../../assets/images/clouds.png';
 import heroPath from '../../../assets/images/character.png';
 import mountainsPath from '../../../assets/images/mountains.png';
 import cocktailPath from '../../../assets/images/cocktail.png';
+import bgmPath from '../../../assets/audios/bgm';
+import gameOverMusicPath from '../../../assets/audios/gameOverMusic';
+import ouchPath from '../../../assets/audios/ouch';
 
 let playingGame = false;
 let gameOver = false;
+const bgm = new s.Sound(bgmPath, 0.3, true, 1);
+const gameOverMusic = new s.Sound(gameOverMusicPath, 0.6, false, 1);
+const ouch = new s.Sound(ouchPath, 0.3, false, 1);
+s.loadAudio();
 
 const subTitle = document.querySelector('.subtitle');
 const descriptions = Array.from(document.querySelectorAll('.description'));
@@ -28,6 +35,8 @@ startButt.addEventListener('click', () => {
   startButt.style.display = 'none';
   cocktails.forEach((cocktail) => (cocktail.xPos = s.randomBetween(500, 800)));
   timeText.text = `Time: 0`;
+  bgm.play();
+  gameOverMusic.stop();
 });
 
 s.addCanvas(canvas, 420, 220);
@@ -68,6 +77,9 @@ for (let i = 0; i < 2; i++) {
     playingGame = false;
     gameOver = true;
     hero.changeAnimationTo('dead');
+    bgm.stop();
+    ouch.play();
+    gameOverMusic.play();
   });
   cocktails.push(cocktail);
 }
